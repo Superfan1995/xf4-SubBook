@@ -7,8 +7,8 @@
     tools:context="com.example.xf4_subbook.NewSubActivity">
 
     <TextView
-        android:id="@+id/View_name"
-        android:layout_width="300dp"
+        android:id="@+id/viewName"
+        android:layout_width="350dp"
         android:layout_height="28dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
@@ -19,8 +19,8 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/View_date"
-        android:layout_width="300dp"
+        android:id="@+id/viewDate"
+        android:layout_width="350dp"
         android:layout_height="28dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
@@ -28,11 +28,11 @@
         android:textColor="@android:color/background_dark"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Edit_name" />
+        app:layout_constraintTop_toBottomOf="@+id/editName" />
 
     <TextView
-        android:id="@+id/View_charge"
-        android:layout_width="300dp"
+        android:id="@+id/viewCharge"
+        android:layout_width="350dp"
         android:layout_height="28dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
@@ -40,11 +40,11 @@
         android:textColor="@android:color/background_dark"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Edit_date" />
+        app:layout_constraintTop_toBottomOf="@+id/editYear" />
 
     <TextView
-        android:id="@+id/View_comment"
-        android:layout_width="300dp"
+        android:id="@+id/viewComment"
+        android:layout_width="350dp"
         android:layout_height="28dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
@@ -52,33 +52,22 @@
         android:textColor="@android:color/background_dark"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Edit_charge" />
+        app:layout_constraintTop_toBottomOf="@+id/editCharge" />
 
     <EditText
-        android:id="@+id/Edit_name"
+        android:id="@+id/editName"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="42dp"
         android:layout_marginStart="16dp"
         android:ems="10"
         android:hint="@string/new_edit_name"
         android:inputType="textPersonName"
         android:maxLength="20"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/View_name" />
+        app:layout_constraintTop_toBottomOf="@+id/viewName" />
 
     <EditText
-        android:id="@+id/Edit_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:ems="10"
-        android:hint="@string/new_edit_date"
-        android:inputType="date"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/View_date" />
-
-    <EditText
-        android:id="@+id/Edit_charge"
+        android:id="@+id/editCharge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -86,41 +75,10 @@
         android:hint="@string/new_edit_charge"
         android:inputType="number"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/View_charge" />
-
-    <Button
-        android:id="@+id/button_commit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/new_button_commit"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Edit_comment" />
-
-    <Button
-        android:id="@+id/button_quit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/new_bottom_quit"
-        app:layout_constraintStart_toEndOf="@+id/button_commit"
-        app:layout_constraintTop_toBottomOf="@+id/Edit_comment" />
-
-    <TextView
-        android:id="@+id/View_result"
-        android:layout_width="357dp"
-        android:layout_height="61dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:textColor="@android:color/holo_red_light"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_commit" />
+        app:layout_constraintTop_toBottomOf="@+id/viewCharge" />
 
     <EditText
-        android:id="@+id/Edit_comment"
+        android:id="@+id/editComment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -129,6 +87,73 @@
         android:inputType="textPersonName"
         android:maxLength="30"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/View_comment" />
+        app:layout_constraintTop_toBottomOf="@+id/viewComment" />
+
+    <Button
+        android:id="@+id/buttonCommit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/new_button_commit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editComment" />
+
+    <Button
+        android:id="@+id/buttonQuit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/new_bottom_quit"
+        app:layout_constraintStart_toEndOf="@+id/buttonCommit"
+        app:layout_constraintTop_toBottomOf="@+id/editComment" />
+
+    <TextView
+        android:id="@+id/viewResult"
+        android:layout_width="357dp"
+        android:layout_height="61dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:textColor="@android:color/holo_red_light"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonCommit" />
+
+    <EditText
+        android:id="@+id/editDay"
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:ems="10"
+        android:hint="@string/new_edit_day"
+        android:inputType="number"
+        android:maxLength="2"
+        app:layout_constraintStart_toEndOf="@+id/editMonth"
+        app:layout_constraintTop_toBottomOf="@+id/viewDate" />
+
+    <EditText
+        android:id="@+id/editMonth"
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:ems="10"
+        android:hint="@string/new_edit_month"
+        android:inputType="number"
+        android:maxLength="2"
+        app:layout_constraintStart_toEndOf="@+id/editYear"
+        app:layout_constraintTop_toBottomOf="@+id/viewDate" />
+
+    <EditText
+        android:id="@+id/editYear"
+        android:layout_width="119dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:ems="10"
+        android:hint="@string/new_edit_year"
+        android:inputType="number"
+        android:maxLength="4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewDate" />
 
 </android.support.constraint.ConstraintLayout>

@@ -16,7 +16,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".NewSubActivity"></activity>
+        <activity android:name=".NewSubActivity" />
+        <activity
+            android:name=".ViewSubActivity"
+            android:label="@string/title_activity_view_sub"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

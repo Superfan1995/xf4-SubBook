@@ -21,67 +21,86 @@ public class NewSubActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_sub);
 
-        Button CommitButton = (Button) findViewById(R.id.button_commit);
-        Button QuitButton = (Button) findViewById(R.id.button_quit);
+        Button CommitButton = (Button) findViewById(R.id.buttonCommit);
+        Button QuitButton = (Button) findViewById(R.id.buttonQuit);
 
         CommitButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View V) {
 
                 String warning;
-                TextView resultView = findViewById(R.id.View_result);
+                TextView resultView = findViewById(R.id.viewResult);
 
-                EditText nameText = (EditText) findViewById(R.id.Edit_name);
-                EditText dateText = (EditText) findViewById(R.id.Edit_date);
-                EditText chargeText = (EditText) findViewById(R.id.Edit_charge);
-                EditText commentText = (EditText) findViewById(R.id.Edit_comment);
+                EditText nameText = (EditText) findViewById(R.id.editName);
+                EditText yearText = (EditText) findViewById(R.id.editYear);
+                EditText monthText = (EditText) findViewById(R.id.editMonth);
+                EditText dayText = (EditText) findViewById(R.id.editDay);
+                EditText chargeText = (EditText) findViewById(R.id.editCharge);
+                EditText commentText = (EditText) findViewById(R.id.editComment);
 
                 String newName = nameText.getText().toString();
-                String dateString = dateText.getText().toString();
+                String newYear = yearText.getText().toString();
+                String newMonth = monthText.getText().toString();
+                String newDay = dayText.getText().toString();
                 String chargeString = chargeText.getText().toString();
                 String newComment = commentText.getText().toString();
 
+                int intMonth = 0;
+                int intDay = 0;
                 int resultMode = 1;
 
-                if ( (!newName.matches("")) &&
-                        (!dateString.matches("")) &&
-                        (!chargeString.matches("")) ) {
+                if (!newName.matches("") &&
+                        (newYear.length() == 4 ) &&
+                        (newMonth.length() == 2) &&
+                        (newDay.length() == 2) &&
+                        (!chargeString.matches(""))) {
 
-                    int newCharge = Integer.parseInt(chargeString);
+                    intMonth = Integer.parseInt(newMonth);
+                    intDay = Integer.parseInt(newDay);
 
-                    // https://stackoverflow.com/questions/6510724/how-to-convert-java-string-to-date-object
-                    // 2018-1-31
-                    try {
-                        Date newDate;
-                        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-                        newDate = df.parse(dateString);
+                    if ( (intMonth > 0) && (intMonth < 13) ) {
 
-                        Intent intent = new Intent(NewSubActivity.this,
-                                MainActivity.class);
+                        if ( (intDay > 0) && (intDay <32) ) {
 
-                        intent.putExtra("name", newName);
-                        intent.putExtra("date", dateString);
-                        intent.putExtra("charge", chargeString);
-                        intent.putExtra("comment", newComment);
+                            Intent intent = new Intent(NewSubActivity.this,
+                                    MainActivity.class);
 
-                        startActivity(intent);
+                            String newDate = newYear + "-" + newMonth + "-" + newDay;
 
-                    } catch (ParseException e) {
-                        e.printStackTrace();
+                            intent.putExtra("mode", resultMode);
+                            intent.putExtra("name", newName);
+                            intent.putExtra("date", newDate);
+                            intent.putExtra("charge", chargeString);
+                            intent.putExtra("comment", newComment);
 
-                        warning = "Error: Date format is not correct!";
+                            startActivity(intent);
+                        }
+
+                        else {
+                            warning = "Error: Day need to from 01 to 31";
+                            resultView.setText(warning);
+                        }
+                    }
+
+                    else {
+                        warning = "Error: Month need to from 01 to 12";
                         resultView.setText(warning);
                     }
 
                 }
-
                 else {
 
                     if (newName.matches("")) {
                         warning = "Error: New subscription required a name!";
                     }
-                    else if (dateString.matches("")) {
-                        warning = "Error: New subscription required a date started!";
+                    else if (newYear.matches("") ) {
+                        warning = "Error: New subscription required a Year with exactly 4 char: yyyy";
+                    }
+                    else if (newMonth.matches("") ) {
+                        warning = "Error: New subscription required a Month with exactly 2 char: MM";
+                    }
+                    else if (newDay.matches("") ) {
+                        warning = "Error: New subscription required a Day with exactly 2 char: dd";
                     }
                     else {
                         warning = "Error: New subscription required a monthly charge!";

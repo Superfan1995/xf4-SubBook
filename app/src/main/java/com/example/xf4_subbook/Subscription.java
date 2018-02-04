@@ -9,11 +9,11 @@ import java.util.Date;
 public class Subscription {
 
     private String name;
-    private Date date;
+    private String date;
     private int charge;
     private String comment;
 
-    public Subscription(String name, Date date, int charge, String comment) {
+    public Subscription(String name, String date, int charge, String comment) {
         this.name = name;
         this.date = date;
         this.charge = charge;
@@ -33,7 +33,7 @@ public class Subscription {
         }
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
@@ -63,8 +63,11 @@ public class Subscription {
         }
     }
 
+    // From http://www.ezzylearning.com/tutorial/binding-android-listview-with-custom-objects-using-arrayadapter
+    // 2018-2-2
+    @Override
     public String toString() {
-        return name;
+        return this.name + " | " + this.date + " | $" + this.charge;
     }
 
 }
