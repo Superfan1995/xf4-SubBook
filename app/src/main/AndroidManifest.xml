@@ -17,10 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".NewSubActivity" />
-        <activity
-            android:name=".ViewSubActivity"
-            android:label="@string/title_activity_view_sub"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".ViewSubActivity"></activity>
     </application>
 
 </manifest>
