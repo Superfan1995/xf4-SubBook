@@ -16,4 +16,12 @@
     <string name="new_edit_month">Month</string>
     <string name="new_edit_day">Day</string>
     <string name="title_activity_view_sub">ViewSubActivity</string>
+    <string name="view_subs_name">Name:</string>
+    <string name="view_subs_date">Date Started:</string>
+    <string name="view_subs_charge">Monthly Charge:</string>
+    <string name="view_subs_comment">Comment:</string>
+    <string name="view_button_return">Return to Main Page</string>
+    <string name="view_button_edit">Edit Subscription</string>
+    <string name="edit_button_return">Return Without Save</string>
+    <string name="edit_Save_Button">Save Change</string>
 </resources>

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -22,6 +23,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.lang.reflect.Array;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
@@ -45,18 +47,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         int returnMode;
+        int returnPosition;
         String newName;
         String newDate;
         String newComment;
         String chargeString;
-        int newCharge;
+        final int newCharge;
 
         Button newSubButton = (Button) findViewById(R.id.buttonCreate);
         Button clearSubButton = (Button) findViewById(R.id.buttonClear);
         listViewSubs = (ListView) findViewById(R.id.listViewSubs);
 
         loadFromFile();
-        //subsList = new ArrayList<Subscription>();
         adapter = new ArrayAdapter<Subscription>(this,
                 android.R.layout.simple_list_item_1, subsList);
         listViewSubs.setAdapter(adapter);
@@ -77,10 +79,44 @@ public class MainActivity extends AppCompatActivity {
                 newComment = extras.getString("comment");
                 newCharge = Integer.parseInt(chargeString);
 
-                Subscription subscription = new Subscription(newName, newDate, newCharge, newComment);
+                Subscription subscription = new Subscription(
+                        newName, newDate, newCharge, newComment);
 
                 subsList.add(subscription);
                 adapter.notifyDataSetChanged();
+            }
+
+            else if (returnMode == 2) {
+
+                returnPosition = extras.getInt("position");
+                newName = extras.getString("name");
+                newDate = extras.getString("date");
+                chargeString = extras.getString("charge");
+                newComment = extras.getString("comment");
+                newCharge = Integer.parseInt(chargeString);
+
+                Subscription subscription = new Subscription(
+                        newName, newDate, newCharge, newComment);
+
+                subsList.get(returnPosition).setDate(newDate);
+
+                try {
+                    subsList.get(returnPosition).setName(newName);
+                }
+                catch (NameTooLongException e) {
+                }
+
+                try {
+                    subsList.get(returnPosition).setCharge(newCharge);
+                }
+                catch (ChargeNegativeException e) {
+                }
+
+                try {
+                    subsList.get(returnPosition).setComment(newComment);
+                }
+                catch (CommentTooLongException e) {
+                }
             }
 
             showTotal();
@@ -92,7 +128,20 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
+                String name = subsList.get(i).getName();
+                String date = subsList.get(i).getDate();
+                int charge = subsList.get(i).getCharge();
+                String comment = subsList.get(i).getComment();
 
+                Intent intent = new Intent(MainActivity.this, ViewSubActivity.class);
+
+                intent.putExtra("position", i);
+                intent.putExtra("name", name);
+                intent.putExtra("date", date);
+                intent.putExtra("charge", charge);
+                intent.putExtra("comment", comment);
+
+                startActivity(intent);
             }
         });
 
