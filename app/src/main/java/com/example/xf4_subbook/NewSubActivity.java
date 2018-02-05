@@ -8,23 +8,36 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+/**
+ * NewSubActivity
+ *
+ * create a new subscritpion
+ *
+ * @author xf4
+ * @version 1.0
+ */
 
 public class NewSubActivity extends AppCompatActivity {
 
+    /** called when the activity first created */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_sub);
 
-        Button CommitButton = (Button) findViewById(R.id.buttonCommit);
-        Button QuitButton = (Button) findViewById(R.id.buttonQuit);
+        Button CommitButton = (Button) findViewById(R.id.buttonCommit); // commit button
+        Button QuitButton = (Button) findViewById(R.id.buttonQuit); // quit button
 
+        /**
+         * processing the input data when commit button clicked. If legal, return information
+         * of new subscription
+         */
         CommitButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View V) {
 
-                String warning;
-                TextView resultView = findViewById(R.id.viewResult);
+                String warning; // print error message if data not legal
+                TextView resultView = findViewById(R.id.viewResult); // warning TextView
 
                 EditText nameText = (EditText) findViewById(R.id.editName);
                 EditText yearText = (EditText) findViewById(R.id.editYear);
@@ -33,6 +46,7 @@ public class NewSubActivity extends AppCompatActivity {
                 EditText chargeText = (EditText) findViewById(R.id.editCharge);
                 EditText commentText = (EditText) findViewById(R.id.editComment);
 
+                // get the input data required to create a subscription
                 String newName = nameText.getText().toString();
                 String newYear = yearText.getText().toString();
                 String newMonth = monthText.getText().toString();
@@ -40,10 +54,11 @@ public class NewSubActivity extends AppCompatActivity {
                 String chargeString = chargeText.getText().toString();
                 String newComment = commentText.getText().toString();
 
-                int intMonth = 0;
-                int intDay = 0;
-                int resultMode = 1;
+                int intMonth = 0; // month of data started in int
+                int intDay = 0; // day of data started in int
+                int resultMode = 1; // the return mode of subscription, 1 for creating new
 
+                // check if the form od date is legal, and charge and name not null
                 if (!newName.matches("") &&
                         (newYear.length() == 4 ) &&
                         (newMonth.length() == 2) &&
@@ -57,6 +72,7 @@ public class NewSubActivity extends AppCompatActivity {
 
                         if ( (intDay > 0) && (intDay <32) ) {
 
+                            // send data to MainActivity to create new subscription
                             Intent intent = new Intent(NewSubActivity.this,
                                     MainActivity.class);
 
@@ -71,18 +87,22 @@ public class NewSubActivity extends AppCompatActivity {
                             startActivity(intent);
                         }
 
+                        // print warning is day is not avaliable
                         else {
                             warning = "Error: Day need to from 01 to 31";
                             resultView.setText(warning);
                         }
                     }
 
+                    // print warning if month is not avaliable
                     else {
                         warning = "Error: Month need to from 01 to 12";
                         resultView.setText(warning);
                     }
 
                 }
+
+                // print warning is not all required data are provided
                 else {
 
                     if (newName.matches("")) {
@@ -107,6 +127,9 @@ public class NewSubActivity extends AppCompatActivity {
             }
         });
 
+        /**
+         * return to MainActicity without creating any subscription
+         */
         QuitButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View V) {

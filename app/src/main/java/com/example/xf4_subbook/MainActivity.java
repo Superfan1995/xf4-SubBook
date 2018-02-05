@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -23,69 +22,88 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.lang.reflect.Array;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
+/**
+ * MainActivity
+ *
+ * Maintain and show a list of subscriptions and summery information. provide option to
+ * view detail of a single subscription, create new subscription and delete all subscription
+ *
+ * @author xf4
+ * @version 1.0
+ *
+ */
+
 public class MainActivity extends AppCompatActivity {
 
-    private static final String FILENAME = "subs_list_save";
-    private ListView listViewSubs;
-    private TextView viewNum;
-    private TextView viewTotalCharge;
+    private static final String FILENAME = "subs_list_save";    // the save file
+    private ListView listViewSubs;      //  subscription ListView
+    private TextView viewNum;           // number of subscription TextView
+    private TextView viewTotalCharge;   // Total monthly charge of all subscription TextView
 
-    private ArrayList<Subscription> subsList;
-    private ArrayAdapter<Subscription> adapter;
+    private ArrayList<Subscription> subsList;       // subscription list
+    private ArrayAdapter<Subscription> adapter;     // subscription list adapter
 
-    private int subsNumber;
-    private int totalCharge;
-    // test
+    private int subsNumber;     // number of subscription
+    private int totalCharge;    // total monthly charge of all subscription
 
+    /** Called when the MainActivity is first created */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        int returnMode;
-        int returnPosition;
-        String newName;
-        String newDate;
-        String newComment;
-        String chargeString;
-        final int newCharge;
+        int returnMode;         // which activity send the data
+        int returnPosition;     // position of subscription in list that changed
 
-        Button newSubButton = (Button) findViewById(R.id.buttonCreate);
-        Button clearSubButton = (Button) findViewById(R.id.buttonClear);
+        String newName;         // subscription name
+        String newDate;         // subscription date
+        String newComment;      // subscription comment
+        String chargeString;    // subscription charge in string
+        final int newCharge;    // subscription charge in int
+
+        Button newSubButton = (Button) findViewById(R.id.buttonCreate);     // create button
+        Button clearSubButton = (Button) findViewById(R.id.buttonClear);    // clear button
         listViewSubs = (ListView) findViewById(R.id.listViewSubs);
 
+        // load the subscriptions in arraylist, show in listview and set adapter
         loadFromFile();
         adapter = new ArrayAdapter<Subscription>(this,
                 android.R.layout.simple_list_item_1, subsList);
         listViewSubs.setAdapter(adapter);
 
+        // print number and total charge of all subscriptions
         showTotal();
 
         // From https://stackoverflow.com/questions/4233873/how-do-i-get-extra-data-from-intent-on-android
         // 2018-1-31
+        // check if new data arrive from other activity
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
 
+            // beginning procressing input data
             returnMode = extras.getInt("mode");
 
+            // if mode 1, then generate a new subscription
             if (returnMode == 1) {
                 newName = extras.getString("name");
                 newDate = extras.getString("date");
                 chargeString = extras.getString("charge");
                 newComment = extras.getString("comment");
-                newCharge = Integer.parseInt(chargeString);
+                newCharge = Integer.parseInt(chargeString);     // get charge in int
 
+                // creating new subscription
                 Subscription subscription = new Subscription(
                         newName, newDate, newCharge, newComment);
 
+                // add to the arraylist and show the change in listview
                 subsList.add(subscription);
                 adapter.notifyDataSetChanged();
             }
 
+            // if mode 2, then change an existing subscription
             else if (returnMode == 2) {
 
                 returnPosition = extras.getInt("position");
@@ -93,46 +111,54 @@ public class MainActivity extends AppCompatActivity {
                 newDate = extras.getString("date");
                 chargeString = extras.getString("charge");
                 newComment = extras.getString("comment");
-                newCharge = Integer.parseInt(chargeString);
+                newCharge = Integer.parseInt(chargeString);     // get charge in int
 
-                Subscription subscription = new Subscription(
-                        newName, newDate, newCharge, newComment);
-
-                subsList.get(returnPosition).setDate(newDate);
+                subsList.get(returnPosition).setDate(newDate);  // set to new date
 
                 try {
-                    subsList.get(returnPosition).setName(newName);
+                    subsList.get(returnPosition).setName(newName); // set to new name
                 }
                 catch (NameTooLongException e) {
                 }
 
                 try {
-                    subsList.get(returnPosition).setCharge(newCharge);
+                    subsList.get(returnPosition).setCharge(newCharge); // set to new charge
                 }
                 catch (ChargeNegativeException e) {
                 }
 
                 try {
-                    subsList.get(returnPosition).setComment(newComment);
+                    subsList.get(returnPosition).setComment(newComment); // set to new comment
                 }
                 catch (CommentTooLongException e) {
                 }
+            }
+
+            // if mode 3, delete an exsiting subscription
+            else if (returnMode == 3) {
+
+                returnPosition = extras.getInt("position");
+                subsList.remove(returnPosition);
             }
 
             showTotal();
             saveInFile();
         }
 
+        /**
+         * View detail of a subscription when being clicked in list view
+         **/
         listViewSubs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                String name = subsList.get(i).getName();
-                String date = subsList.get(i).getDate();
-                int charge = subsList.get(i).getCharge();
-                String comment = subsList.get(i).getComment();
+                String name = subsList.get(i).getName(); // name of clicked subscription
+                String date = subsList.get(i).getDate(); // date of clicked subscription
+                int charge = subsList.get(i).getCharge(); // monthly charge of clicked subscription
+                String comment = subsList.get(i).getComment(); // comment of clicked subscription
 
+                // create new intent and send data to the ViewSubActivity
                 Intent intent = new Intent(MainActivity.this, ViewSubActivity.class);
 
                 intent.putExtra("position", i);
@@ -145,6 +171,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        /**
+         * Create a new subscription when create new button clicked
+         */
         newSubButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View V) {
@@ -156,6 +185,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        /**
+         * Clear all subscriptions when clear button clicked
+         */
         clearSubButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
@@ -168,11 +200,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * show total number of subscriptions and total monthly charge
+     */
     public void showTotal () {
 
-        subsNumber = subsList.size();
+        subsNumber = subsList.size();   // get the number of subscription
         totalCharge = 0;
 
+        // add monthly charge of all subscription
         for (int i = 0; i < subsList.size(); i = i + 1) {
 
             totalCharge = totalCharge + subsList.get(i).getCharge();
@@ -188,6 +224,9 @@ public class MainActivity extends AppCompatActivity {
 
     // From lab4 lonelyTweeter: https://github.com/Superfan1995/lonelyTwitter
     // 2018-2-3
+    /**
+     * load the subscriptions from the save file
+     */
     private void loadFromFile() {
 
         try {
@@ -209,6 +248,9 @@ public class MainActivity extends AppCompatActivity {
 
     // From lab4 lonelyTweeter: https://github.com/Superfan1995/lonelyTwitter
     // 2018-2-3
+    /**
+     * save the new arrayList of subscriptions in save file
+     */
     private void saveInFile () {
 
         try {
@@ -226,10 +268,5 @@ public class MainActivity extends AppCompatActivity {
             throw new RuntimeException();
         }
     }
-
-    //@Override
-    //protected void onDestroy() {
-    //    super.onDestroy();
-    //}
 
 }

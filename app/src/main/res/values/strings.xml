@@ -24,4 +24,5 @@
     <string name="view_button_edit">Edit Subscription</string>
     <string name="edit_button_return">Return Without Save</string>
     <string name="edit_Save_Button">Save Change</string>
+    <string name="view_button_delete">Delete This Subscription</string>
 </resources>

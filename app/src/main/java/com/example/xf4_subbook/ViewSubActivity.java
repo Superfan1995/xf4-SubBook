@@ -7,27 +7,41 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+/**
+ * ViewSubActivity
+ *
+ * Control the activity of show user a single subscription in recorded subscription list
+ * Can return to main activity, edit the subscription or delete the subscription
+ *
+ * @author xf4
+ * @version 1.0
+ */
 
 public class ViewSubActivity extends AppCompatActivity {
 
+    /**
+     * Called when the ViewSubActivity is first created
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_sub);
 
-        final int subsPosition;
-        final String subsName;
-        final String subsDate;
-        final String subsCharge;
-        final String subsComment;
-        String showCharge;
+        final int subsPosition;     // position of subscription in arraylist
+        final String subsName;      // name of the subscription
+        final String subsDate;      // date started of subscription
+        final String subsCharge;    // monthly charge of subscription
+        final String subsComment;   // comment of subscription
+        String showCharge;          // monthly charge in String
 
-        TextView viewName;
-        TextView viewDate;
-        TextView viewCharge;
-        TextView viewComment;
+        TextView viewName;          // TextView of name
+        TextView viewDate;          // TextView of date
+        TextView viewCharge;        // TextView of charge
+        TextView viewComment;       // TextView of comment
 
+        // get data from MainActivity or EditSubActivity
         Bundle extras = getIntent().getExtras();
 
         subsPosition = extras.getInt("position");
@@ -47,9 +61,13 @@ public class ViewSubActivity extends AppCompatActivity {
         viewCharge.setText(showCharge);
         viewComment.setText(subsComment);
 
-        Button returnButton = (Button) findViewById(R.id.returnButton);
-        Button editButton = (Button) findViewById(R.id.editButton) ;
+        Button returnButton = (Button) findViewById(R.id.returnButton); // return button
+        Button editButton = (Button) findViewById(R.id.editButton) ; // edit button
+        Button deleteButton = (Button) findViewById(R.id.deleteButton); // delete button
 
+        /**
+         * Return to MainActivity when return button is clicked
+         */
         returnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,6 +78,9 @@ public class ViewSubActivity extends AppCompatActivity {
             }
         });
 
+        /**
+         * Enter EditSubActivity when edit button is clicked
+         */
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,5 +97,23 @@ public class ViewSubActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        /**
+         * Detele the current viewing subscription when delete button is clicked
+         */
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(ViewSubActivity.this,
+                        MainActivity.class);
+
+                intent.putExtra("mode", 3);
+                intent.putExtra("position", subsPosition);
+
+                startActivity(intent);
+            }
+        });
+
     }
 }
