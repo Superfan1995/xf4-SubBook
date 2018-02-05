@@ -78,7 +78,7 @@
         android:layout_marginStart="16dp"
         android:ems="10"
         android:hint="@string/new_edit_charge"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewCharge" />
 

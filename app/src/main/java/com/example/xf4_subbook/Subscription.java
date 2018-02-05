@@ -1,3 +1,13 @@
+/*
+ *  Copyright  © 2018 Xiang Fan, CMPUT301, University of Alberta - All right REserved.
+ *  You may use, distribute or modify this code under terms and conditions of Code of
+ * Students  Behaviors at
+ *  University of Alberta.
+ *  You can find a cope of the license in this project. Otherwise, please contact
+ * xf4@ualberta.ca
+ * /
+ */
+
 package com.example.xf4_subbook;
 
 import java.util.Date;
@@ -20,7 +30,7 @@ public class Subscription {
 
     private String name;    // name of subscription (upto 20 char)
     private String date;    // date started of subscription (yyy-MM-dd)
-    private int charge;     // monthly charge of subscription, non-negative, canadian dollars
+    private float charge;     // monthly charge of subscription, non-negative, canadian dollars
     private String comment; // comment of subscription (upto 30 char)
 
     /**
@@ -31,7 +41,7 @@ public class Subscription {
      * @param charge monthly charge of subscription
      * @param comment comment of subscription
      */
-    public Subscription(String name, String date, int charge, String comment) {
+    public Subscription(String name, String date, float charge, String comment) {
         this.name = name;
         this.date = date;
         this.charge = charge;
@@ -85,7 +95,7 @@ public class Subscription {
      *
      * @return monthly charge of subscription
      */
-    public int getCharge() {
+    public float getCharge() {
         return charge;
     }
 
@@ -95,7 +105,7 @@ public class Subscription {
      * @param charge new charge of the subscription
      * @throws ChargeNegativeException throws when charge is negetive values
      */
-    public void setCharge(int charge) throws ChargeNegativeException {
+    public void setCharge(float charge) throws ChargeNegativeException {
         if (charge >= 0 ) {
             this.charge = charge;
         }

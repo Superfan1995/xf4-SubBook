@@ -1,3 +1,13 @@
+/*
+ *  Copyright  © 2018 Xiang Fan, CMPUT301, University of Alberta - All right REserved.
+ *  You may use, distribute or modify this code under terms and conditions of Code of
+ * Students  Behaviors at
+ *  University of Alberta.
+ *  You can find a cope of the license in this project. Otherwise, please contact
+ * xf4@ualberta.ca
+ * /
+ */
+
 package com.example.xf4_subbook;
 
 import android.content.Context;
@@ -47,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayAdapter<Subscription> adapter;     // subscription list adapter
 
     private int subsNumber;     // number of subscription
-    private int totalCharge;    // total monthly charge of all subscription
+    private float totalCharge;    // total monthly charge of all subscription
 
     /** Called when the MainActivity is first created */
     @Override
@@ -62,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         String newDate;         // subscription date
         String newComment;      // subscription comment
         String chargeString;    // subscription charge in string
-        final int newCharge;    // subscription charge in int
+        final float newCharge;    // subscription charge in float
 
         Button newSubButton = (Button) findViewById(R.id.buttonCreate);     // create button
         Button clearSubButton = (Button) findViewById(R.id.buttonClear);    // clear button
@@ -92,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
                 newDate = extras.getString("date");
                 chargeString = extras.getString("charge");
                 newComment = extras.getString("comment");
-                newCharge = Integer.parseInt(chargeString);     // get charge in int
+                newCharge = Float.parseFloat(chargeString);     // get charge in float
 
                 // creating new subscription
                 Subscription subscription = new Subscription(
@@ -111,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
                 newDate = extras.getString("date");
                 chargeString = extras.getString("charge");
                 newComment = extras.getString("comment");
-                newCharge = Integer.parseInt(chargeString);     // get charge in int
+                newCharge = Float.parseFloat(chargeString);     // get charge in float
 
                 subsList.get(returnPosition).setDate(newDate);  // set to new date
 
@@ -155,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
 
                 String name = subsList.get(i).getName(); // name of clicked subscription
                 String date = subsList.get(i).getDate(); // date of clicked subscription
-                int charge = subsList.get(i).getCharge(); // monthly charge of clicked subscription
+                float charge = subsList.get(i).getCharge(); // monthly charge of clicked subscription
                 String comment = subsList.get(i).getComment(); // comment of clicked subscription
 
                 // create new intent and send data to the ViewSubActivity

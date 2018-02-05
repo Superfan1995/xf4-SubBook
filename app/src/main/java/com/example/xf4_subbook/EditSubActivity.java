@@ -1,3 +1,13 @@
+/*
+ *  Copyright  © 2018 Xiang Fan, CMPUT301, University of Alberta - All right REserved.
+ *  You may use, distribute or modify this code under terms and conditions of Code of
+ * Students  Behaviors at
+ *  University of Alberta.
+ *  You can find a cope of the license in this project. Otherwise, please contact
+ * xf4@ualberta.ca
+ * /
+ */
+
 package com.example.xf4_subbook;
 
 import android.content.Intent;
@@ -29,7 +39,7 @@ public class EditSubActivity extends AppCompatActivity {
         final String subsName;      // name of subscription
         final String subsDate;      // date of subscription
         final String subsComment;   // comment of subscription
-        final int intCharge;        // charge of subscription
+        final float floatCharge;        // charge of subscription
 
         String subsCharge;  // Charge in string
         String subsYear;    // year of date in string
@@ -55,8 +65,8 @@ public class EditSubActivity extends AppCompatActivity {
         subsCharge = extras.getString("charge");
         subsComment = extras.getString("comment");
 
-        // convert charge to int
-        intCharge = Integer.parseInt(subsCharge);
+        // convert charge to float
+        floatCharge = Float.parseFloat(subsCharge);
 
         // extract year, month, day from date
         subsYear = subsDate.substring(0, 4);
@@ -177,7 +187,7 @@ public class EditSubActivity extends AppCompatActivity {
                 intent.putExtra("position", subsPosition);
                 intent.putExtra("name", subsName);
                 intent.putExtra("date", subsDate);
-                intent.putExtra("charge", intCharge);
+                intent.putExtra("charge", floatCharge);
                 intent.putExtra("comment", subsComment);
 
                 startActivity(intent);

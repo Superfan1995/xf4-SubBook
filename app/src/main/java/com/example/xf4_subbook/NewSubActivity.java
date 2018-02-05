@@ -1,3 +1,13 @@
+/*
+ *  Copyright  © 2018 Xiang Fan, CMPUT301, University of Alberta - All right REserved.
+ *  You may use, distribute or modify this code under terms and conditions of Code of
+ * Students  Behaviors at
+ *  University of Alberta.
+ *  You can find a cope of the license in this project. Otherwise, please contact
+ * xf4@ualberta.ca
+ * /
+ */
+
 package com.example.xf4_subbook;
 
 import android.content.Intent;
